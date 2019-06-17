@@ -63,3 +63,52 @@ class NRML:
 
     def get_present_distance_list(self):
         return self.parent_data_distance_list, self.child_data_distance_list
+
+    def _process_(self,iteration_count, epsilon):
+        for k in range(iteration_count):
+            #Calculating H1, H2 and H3
+            h1_temp = self.calculate_h1(self.sample_num, self.sample_num//2)
+            h2_temp = self.calculate_h2(self.sample_num, self.sample_num//2)
+            h3_temp = self.calculate_h3(self.sample_num)
+
+    def calculate_h1(self, N, K):
+        h1 = 0
+        for i in range(N):
+            x_i = self.parent_data[i]
+            y_it1_list = self.child_data_distance_list[i]
+
+            for j in range(K):
+                distance_element = y_it1_list[j]
+
+                if distance_element[0] == self.PARENT_CODE:
+                    y_it1 = self.parent_data[distance_element[1]]
+                elif distance_element[1] == self.CHILD_CODE:
+                    y_it1 = self.child_data[distance_element[1]]
+
+                h1 += ((nutils.euclidian_distance(x_i, y_it1))**2)
+
+        return h1/(N*K)
+
+    def calculate_h2(self, N, K):
+        h2 = 0
+        for i in range(N):
+            y_i = self.child_data[i]
+            x_it2_list = self.parent_data_distance_list[i]
+
+            for j in range(K):
+                distance_element = x_it2_list[j]
+
+                if distance_element[0] == self.PARENT_CODE:
+                    x_it2 = self.parent_data[distance_element[1]]
+                elif distance_element[0] == self.CHILD_CODE:
+                    x_it2 = self.child_data[distance_element[1]]
+
+                h2 += ((nutils.euclidian_distance(x_it2, y_i))**2)
+
+            return h2/(N*K)
+
+    def calculate_h3(self, N):
+        h3 = 0
+        for i in range(N):
+            h3 += nutils.euclidian_distance(self.parent_data[i], self.child_data[i])
+        return h3
