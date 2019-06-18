@@ -33,3 +33,12 @@ def column_to_row_vector_multiplication(X,Y):
     y_2d[0] = Y
 
     return x_2d.T.dot(y_2d)
+
+def get_w_matrix(input_matrix, number_of_eigenvectors):
+    """
+    Construct the W matrix here which conforms the condition W*(W_transpose) = I
+    :param input_matrix: The matrix for eigendecomposition. Must be a square matrix
+    :param number_of_eigenvectors: the parameter "l" as specified in the paper
+    :return: returns the W amtrix for the current iteration on which it is called.
+    """
+    eig_values , eig_vectors = np.linalg.eig(input_matrix)

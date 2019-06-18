@@ -57,9 +57,7 @@ class NRML:
         for distance_list in self.child_data_distance_list:
             distance_list.sort(key=lambda tup: tup[2])
 
-        print("data sorting done")
-
-        print("initializing done")
+        print("data sorting and initialization done")
 
     def get_present_distance_list(self):
         return self.parent_data_distance_list, self.child_data_distance_list
@@ -67,9 +65,14 @@ class NRML:
     def _process_(self,iteration_count, epsilon):
         for k in range(iteration_count):
             #Calculating H1, H2 and H3
+
             h1_temp = self.calculate_h1(self.sample_num, self.sample_num//2)
             h2_temp = self.calculate_h2(self.sample_num, self.sample_num//2)
             h3_temp = self.calculate_h3(self.sample_num)
+
+            h_sum = h1_temp + h2_temp - h3_temp
+
+            # Eigenvector decomposition part
 
     def calculate_h1(self, N, K):
         h1 = np.zeros((self.dimension, self.dimension))
