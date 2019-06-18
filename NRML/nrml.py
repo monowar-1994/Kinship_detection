@@ -72,7 +72,7 @@ class NRML:
             h3_temp = self.calculate_h3(self.sample_num)
 
     def calculate_h1(self, N, K):
-        h1 = 0
+        h1 = np.zeros((self.dimension, self.dimension))
         for i in range(N):
             x_i = self.parent_data[i]
             y_it1_list = self.child_data_distance_list[i]
@@ -82,15 +82,18 @@ class NRML:
 
                 if distance_element[0] == self.PARENT_CODE:
                     y_it1 = self.parent_data[distance_element[1]]
-                elif distance_element[1] == self.CHILD_CODE:
+                elif distance_element[0] == self.CHILD_CODE:
                     y_it1 = self.child_data[distance_element[1]]
-
-                h1 += ((nutils.euclidian_distance(x_i, y_it1))**2)
+                else:
+                    # If you find the next print statement executed , then something went wrong
+                    print("Error: In H1 parent or child data not found.", str(distance_element[0]))
+                    y_it1 = np.zeros(self.dimension)
+                h1 += (nutils.column_to_row_vector_multiplication(x_i, y_it1))
 
         return h1/(N*K)
 
     def calculate_h2(self, N, K):
-        h2 = 0
+        h2 = np.zeros((self.dimension, self.dimension))
         for i in range(N):
             y_i = self.child_data[i]
             x_it2_list = self.parent_data_distance_list[i]
@@ -102,13 +105,16 @@ class NRML:
                     x_it2 = self.parent_data[distance_element[1]]
                 elif distance_element[0] == self.CHILD_CODE:
                     x_it2 = self.child_data[distance_element[1]]
+                else:
+                    print("Error: In H2 parent or child data not found. ", str(distance_element[0]))
+                    x_it2 = np.zeros(self.dimension)
 
-                h2 += ((nutils.euclidian_distance(x_it2, y_i))**2)
+                h2 += (nutils.column_to_row_vector_multiplication(x_it2, y_i))
 
             return h2/(N*K)
 
     def calculate_h3(self, N):
-        h3 = 0
+        h3 = np.zeros((self.dimension, self.dimension))
         for i in range(N):
-            h3 += nutils.euclidian_distance(self.parent_data[i], self.child_data[i])
-        return h3
+            h3 += nutils.column_to_row_vector_multiplication(self.parent_data[i], self.child_data[i])
+        return h3/N
