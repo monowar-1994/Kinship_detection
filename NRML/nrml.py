@@ -66,7 +66,7 @@ class NRML:
 
     def _process_(self, iteration_count, epsilon):
         w_prev = np.zeros((self.dimension, self.dimension // 2))
-        w_now: ndarray = np.zeros((self.dimension, self.dimension // 2))
+        w_now = np.zeros((self.dimension, self.dimension // 2))
         diff_array = np.zeros(iteration_count)
         for k in range(iteration_count):
             # Calculating H1, H2 and H3
@@ -87,7 +87,8 @@ class NRML:
             if abs_diff < epsilon:
                 break
             w_prev = w_now
-        return w_now, abs_diff
+            print("Iteration done: "+str(k))
+        return w_now, diff_array
 
     def calculate_h1(self, N, K):
         h1 = np.zeros((self.dimension, self.dimension))
