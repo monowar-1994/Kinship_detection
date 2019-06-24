@@ -6,7 +6,7 @@ a = np.random.rand(256,256)
 b = np.random.rand(256,256)
 
 obj = NRML(256, 256)
-obj.set_data(a,b)
+obj.set_data(a, b)
 obj.initialize_data()
 
 x_d, y_d = obj.get_present_distance_list()
@@ -21,7 +21,10 @@ h2_array = obj.calculate_h2(256,128)
 print("H2 array done")
 
 h = h1_array + h2_array - h3_array
-print(h[0:10, 10:20])
-
 w = nutils.get_w_matrix(h, 256, 20)
-print(w[0:10, 0:10])
+
+f1 = np.random.rand(256)
+f2 = np.random.rand(256)
+
+dist = nutils.get_mahalanbish_distance_variant(f2,f2,w)
+print(dist)
