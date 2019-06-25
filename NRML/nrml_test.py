@@ -4,6 +4,14 @@ import numpy as np
 a = np.random.rand(256,256)
 b = np.random.rand(256,256)
 
+# c = a + 1j*b
+# print(c)
+# d = np.ones(8)
+# d = 2*d
+# print("\n\n")
+# res = c.dot(d.T)
+# print(res)
+
 obj = NRML(256, 256)
 obj.set_data(a, b)
 obj.initialize_data()

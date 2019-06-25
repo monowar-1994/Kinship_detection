@@ -6,6 +6,7 @@ Email: monowaranjum@gmail.com
 
 import numpy as np
 import math
+from numpy.core.multiarray import dtype
 
 
 def euclidian_distance(a, b):
@@ -45,12 +46,11 @@ def get_w_matrix(input_matrix, dimension, number_of_eigenvectors):
     """
     eig_values, eig_vectors = np.linalg.eig(input_matrix)
     eig_values = np.absolute(eig_values)
-    eig_vectors = np.absolute(eig_vectors)
     eig_list = []
     for k in range(eig_values.shape[0]):
         eig_list.append((eig_values[k], eig_vectors[:, k]))
     eig_list.sort(key=lambda tup: tup[0], reverse = True)
-    w_matrix = np.zeros((dimension, number_of_eigenvectors))
+    w_matrix = np.zeros((dimension, number_of_eigenvectors), dtype= np.complex)
     for i in range(number_of_eigenvectors):
         w_matrix[:, i] = eig_list[i][1]
 
@@ -59,7 +59,7 @@ def get_w_matrix(input_matrix, dimension, number_of_eigenvectors):
 
 def get_mahalanbish_distance_variant(f1,f2, w):
     """
-    This function claculates the mahalanbish distance given the feature map of two images
+    This function calculates the mahalanbish distance given the feature map of two images
     :param f1: Feature map from image1
     :param f2: Feature map from image 2
     :param w: The W marix in the formula of Mahalanbish distance
@@ -69,4 +69,4 @@ def get_mahalanbish_distance_variant(f1,f2, w):
     u = (w.T).dot(f1.T)
     v = (w.T).dot(f2.T)
     dist = ((u-v).T).dot(u-v)
-    return math.sqrt(dist)
+    return math.sqrt(np.absolute(dist))
