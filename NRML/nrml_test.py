@@ -1,7 +1,5 @@
 from NRML.nrml import NRML
 import numpy as np
-from NRML import  nrml_utils as nutils
-import matplotlib.pyplot as plt
 
 a = np.random.rand(256,256)
 b = np.random.rand(256,256)
@@ -9,7 +7,7 @@ b = np.random.rand(256,256)
 obj = NRML(256, 256)
 obj.set_data(a, b)
 obj.initialize_data()
-r1,r2 = obj._process_(10, 0.0001)
+r1, r2 = obj._process_(10, 0.0001)
 print(r2)
 
 

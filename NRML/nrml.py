@@ -5,7 +5,6 @@ Email: monowaranjum@gmail.com
 """
 
 import numpy as np
-from numpy.core.multiarray import ndarray
 
 from NRML import nrml_utils as nutils
 
