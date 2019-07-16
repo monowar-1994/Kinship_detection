@@ -58,6 +58,7 @@ def create_positive_data_file(training_file_name, picture_directory):
     return mapping_dataframe
 
 
+
 def create_negative_data_file(train_data_directory, negative_sample_number):
     list_of_family_folder = os.listdir(train_data_directory)
     total_sample_number = 0
